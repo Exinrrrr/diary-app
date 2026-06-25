@@ -1,52 +1,46 @@
-/* === 日历容器 === */
-.calendar-container {
-    user-select: none;
-}
+/* === 日历 === */
+.calendar-container { user-select: none; }
 
-/* === 日历头部：月份导航 === */
+/* === 月份导航 === */
 .calendar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: var(--space-3);
 }
 
 .calendar-month {
+    font-family: var(--font-heading);
     font-size: 16px;
     font-weight: 700;
     color: var(--color-text);
+    letter-spacing: 0.02em;
 }
 
-.calendar-nav {
-    display: flex;
-    gap: 4px;
-}
-
+.calendar-nav { display: flex; gap: 4px; }
 .calendar-nav button {
     background: none;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
+    width: 30px; height: 30px;
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-text-secondary);
-    transition: all 0.15s;
+    transition: all var(--duration-fast) var(--ease-out);
 }
-
 .calendar-nav button:hover {
     background: var(--color-primary-light);
     border-color: var(--color-primary);
     color: var(--color-primary);
 }
-
 .calendar-today-btn {
-    font-size: 12px !important;
+    font-size: 11px !important;
     width: auto !important;
     padding: 0 10px;
+    font-family: var(--font-body);
 }
 
 /* === 星期头 === */
@@ -56,17 +50,12 @@
     text-align: center;
     margin-bottom: 4px;
 }
-
 .calendar-weekdays span {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     color: var(--color-text-muted);
     padding: 4px 0;
-}
-
-.calendar-weekdays span:first-child,
-.calendar-weekdays span:last-child {
-    color: var(--color-accent);
+    letter-spacing: 0.03em;
 }
 
 /* === 日期网格 === */
@@ -85,14 +74,11 @@
     border-radius: var(--radius);
     cursor: pointer;
     position: relative;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--color-text);
-    transition: background 0.15s;
+    transition: background var(--duration-fast) var(--ease-out);
 }
-
-.calendar-cell:hover {
-    background: var(--color-primary-light);
-}
+.calendar-cell:hover { background: var(--color-primary-light); }
 
 .calendar-cell.today {
     background: var(--color-accent-light);
@@ -106,29 +92,21 @@
 
 .calendar-cell.other-month {
     color: var(--color-text-muted);
-    opacity: 0.4;
+    opacity: 0.3;
     cursor: default;
 }
 
 /* === 日期标记 === */
 .cell-indicators {
     display: flex;
-    gap: 2px;
-    margin-top: 1px;
+    gap: 3px;
+    margin-top: 2px;
 }
-
 .cell-dot {
-    width: 5px;
-    height: 5px;
+    width: 5px; height: 5px;
     border-radius: 50%;
     background: var(--color-primary);
 }
+.cell-dot.photo { background: var(--color-accent); }
 
-.cell-dot.photo {
-    background: var(--color-accent);
-}
-
-/* === 当天有日记的单元格 === */
-.calendar-cell.has-entry {
-    font-weight: 600;
-}
+.calendar-cell.has-entry { font-weight: 600; }

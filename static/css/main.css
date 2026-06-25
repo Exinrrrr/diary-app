@@ -1,43 +1,58 @@
-/* === CSS 变量 === */
+/* === CSS 变量：纸质笔记本 === */
 :root {
-    /* 纯白背景 + 近黑文字 + 苔绿主色 */
-    --color-bg: oklch(1 0 0);
-    --color-surface: oklch(0.985 0 0);
-    --color-primary: oklch(0.48 0.095 150);
-    --color-primary-light: oklch(0.92 0.025 150);
-    --color-primary-dark: oklch(0.38 0.085 150);
-    --color-accent: oklch(0.55 0.11 150);
-    --color-accent-light: oklch(0.93 0.03 150);
-    --color-text: oklch(0.15 0 0);
-    --color-text-secondary: oklch(0.48 0 0);
-    --color-text-muted: oklch(0.7 0 0);
-    --color-border: oklch(0.92 0 0);
-    --color-danger: oklch(0.5 0.18 20);
-    --color-danger-light: oklch(0.95 0.02 20);
-    --color-success: oklch(0.52 0.12 150);
+    /* 暖调纸色 */
+    --color-bg: oklch(0.975 0.012 85);
+    --color-surface: oklch(0.99 0.006 85);
+    --color-surface-alt: oklch(0.965 0.015 85);
 
-    --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    --font-mono: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+    /* 钢笔墨水蓝 */
+    --color-primary: oklch(0.38 0.065 240);
+    --color-primary-light: oklch(0.9 0.025 240);
+    --color-primary-dark: oklch(0.28 0.055 240);
 
-    /* 间距：4px 步进 */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
-    --space-8: 32px;
-    --space-10: 40px;
+    /* 赤陶点缀 */
+    --color-accent: oklch(0.48 0.11 35);
+    --color-accent-light: oklch(0.92 0.03 35);
 
-    /* 圆角 */
+    /* 文字 */
+    --color-text: oklch(0.18 0.006 85);
+    --color-text-secondary: oklch(0.45 0.006 85);
+    --color-text-muted: oklch(0.68 0.006 85);
+
+    /* 边框 */
+    --color-border: oklch(0.88 0.01 85);
+    --color-border-light: oklch(0.92 0.008 85);
+
+    /* 语义色 */
+    --color-danger: oklch(0.48 0.16 20);
+    --color-danger-light: oklch(0.94 0.02 20);
+    --color-success: oklch(0.48 0.1 150);
+
+    /* 字体：标题衬线 + 正文无衬线 */
+    --font-heading: "Songti SC", "Noto Serif SC", "STSong", "SimSun", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-mono: "SF Mono", "Fira Code", monospace;
+
+    /* 间距：5px 步进（纸质感需要更宽松的间距） */
+    --space-1: 5px;
+    --space-2: 10px;
+    --space-3: 15px;
+    --space-4: 20px;
+    --space-5: 25px;
+    --space-6: 30px;
+    --space-8: 40px;
+    --space-10: 50px;
+
+    /* 圆角：更柔和的纸张感 */
     --radius: 6px;
-    --radius-lg: 10px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
     --radius-full: 9999px;
 
-    /* 阴影：极轻 */
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-    --shadow-lg: 0 2px 4px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.08);
+    /* 阴影：纸张堆叠感 */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02);
+    --shadow-md: 0 2px 4px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    --shadow-lg: 0 4px 8px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.06);
 
     /* 动效 */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -45,36 +60,29 @@
     --duration-normal: 200ms;
     --duration-slow: 300ms;
 
-    /* z-index 层级 */
+    /* z-index */
     --z-dropdown: 10;
     --z-sticky: 20;
     --z-modal-backdrop: 40;
     --z-modal: 50;
     --z-toast: 60;
-    --z-tooltip: 70;
 
     --sidebar-width: 280px;
-    --header-height: 52px;
+    --header-height: 54px;
 }
 
 /* === 全局重置 === */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 
 body {
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     background: var(--color-bg);
     color: var(--color-text);
-    line-height: 1.6;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
 }
 
-/* === 链接 === */
 a {
     color: var(--color-primary);
     text-decoration: none;
@@ -82,7 +90,6 @@ a {
 }
 a:hover { color: var(--color-primary-dark); }
 
-/* === 焦点环 === */
 :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
@@ -96,10 +103,9 @@ a:hover { color: var(--color-primary-dark); }
     min-height: 100vh;
     max-width: 1200px;
     margin: 0 auto;
-    background: var(--color-bg);
 }
 
-/* === 顶部导航 === */
+/* === 顶部导航：像书脊 === */
 .app-header {
     display: flex;
     align-items: center;
@@ -118,10 +124,11 @@ a:hover { color: var(--color-primary-dark); }
 }
 
 .app-title {
-    font-size: 17px;
-    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
     color: var(--color-text);
-    letter-spacing: -0.01em;
+    letter-spacing: 0.02em;
 }
 
 .app-subtitle {
@@ -140,18 +147,17 @@ a:hover { color: var(--color-primary-dark); }
     background: none;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: var(--space-2) var(--space-3);
-    font-size: 15px;
+    padding: var(--space-1) var(--space-3);
+    font-size: 14px;
     cursor: pointer;
-    transition: background var(--duration-fast) var(--ease-out),
-                border-color var(--duration-fast) var(--ease-out);
-    min-height: 36px;
+    transition: all var(--duration-fast) var(--ease-out);
+    min-height: 34px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--color-text-secondary);
+    font-family: var(--font-body);
 }
-
 .header-btn:hover {
     background: var(--color-primary-light);
     border-color: var(--color-primary);
@@ -161,26 +167,19 @@ a:hover { color: var(--color-primary-dark); }
 /* 通知角标 */
 .badge {
     position: absolute;
-    top: -4px;
-    right: -6px;
-    background: var(--color-danger);
+    top: -4px; right: -6px;
+    background: var(--color-accent);
     color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    min-width: 18px;
-    height: 18px;
-    line-height: 18px;
+    font-size: 10px; font-weight: 700;
+    min-width: 18px; height: 18px; line-height: 18px;
     text-align: center;
     border-radius: var(--radius-full);
     padding: 0 5px;
 }
-
 .badge.hidden { display: none; }
-
 .badge.pulse {
     animation: badgePulse 250ms var(--ease-out);
 }
-
 @keyframes badgePulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.3); }
@@ -197,7 +196,7 @@ a:hover { color: var(--color-primary-dark); }
     width: var(--sidebar-width);
     flex-shrink: 0;
     background: var(--color-surface);
-    border-right: 1px solid var(--color-border);
+    border-right: 1px solid var(--color-border-light);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -216,6 +215,9 @@ a:hover { color: var(--color-primary-dark); }
     flex: 1;
     overflow-y: auto;
     padding: var(--space-8);
+    background:
+        linear-gradient(to bottom, var(--color-surface) 0%, transparent 40px),
+        var(--color-bg);
 }
 
 /* === 视图切换 === */
@@ -230,25 +232,23 @@ a:hover { color: var(--color-primary-dark); }
     justify-content: center;
     text-align: center;
     height: 100%;
-    color: var(--color-text-secondary);
 }
-
 .welcome-icon {
-    font-size: 40px;
+    font-size: 56px;
     margin-bottom: var(--space-5);
-    opacity: 0.2;
+    opacity: 0.15;
 }
-
 .welcome-card h2 {
-    font-size: 22px;
-    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
     color: var(--color-text);
     margin-bottom: var(--space-2);
+    letter-spacing: 0.03em;
 }
-
 .welcome-card p {
-    font-size: 14px;
-    line-height: 1.8;
+    font-size: 15px;
+    line-height: 1.9;
     color: var(--color-text-secondary);
 }
 
@@ -264,20 +264,4 @@ a:hover { color: var(--color-primary-dark); }
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
     }
-}
-
-/* === 空状态 === */
-.empty-state {
-    text-align: center;
-    padding: var(--space-10) var(--space-6);
-    color: var(--color-text-muted);
-}
-.empty-state .empty-icon {
-    font-size: 32px;
-    margin-bottom: var(--space-3);
-    opacity: 0.2;
-}
-.empty-state p {
-    font-size: 14px;
-    line-height: 1.7;
 }
