@@ -31,7 +31,7 @@ const EntryView = {
             <div class="entry-container">
                 <div class="entry-header">
                     <div class="entry-date">${formatDateCN(date)}</div>
-                    <div class="entry-title">${this._escapeHtml(data.title || '无标题')}</div>
+                    <div class="entry-title">${escHtml(data.title || '无标题')}</div>
                     <div class="entry-meta">
                         <span>${data.word_count || 0} 字</span>
                         ${moodHtml}
@@ -114,7 +114,7 @@ const EntryView = {
                 <div class="entry-header">
                     <div class="entry-date">${formatDateCN(date)}</div>
                     <input type="text" class="entry-title-input" id="edit-title"
-                           value="${this._escapeHtml(title)}" placeholder="日记标题（可选）">
+                           value="${escHtml(title)}" placeholder="日记标题（可选）">
                     <div class="mood-selector">
                         ${['😊','😌','😐','😢','💪','🎉'].map(m => `
                             <button class="mood-btn ${mood === m ? 'selected' : ''}" data-mood="${m}">${m}</button>
@@ -131,7 +131,7 @@ const EntryView = {
                     <button class="toolbar-btn" data-action="auto-format" title="自动格式化" style="margin-left:auto;background:var(--color-accent-light);border-color:var(--color-accent);color:var(--color-accent);">✨ 自动排版</button>
                 </div>
 
-                <textarea class="entry-editor" id="edit-content" placeholder="在这里写日记...&#10;&#10;可以用 Markdown 语法：&#10;- 列表项&#10;**加粗**&#10;## 标题">${this._escapeHtml(contentMd)}</textarea>
+                <textarea class="entry-editor" id="edit-content" placeholder="在这里写日记...&#10;&#10;可以用 Markdown 语法：&#10;- 列表项&#10;**加粗**&#10;## 标题">${escHtml(contentMd)}</textarea>
 
                 ${photosHtml}
 
@@ -321,7 +321,7 @@ const EntryView = {
                 <div class="photo-card">
                     <img src="/api/photos/${AppState.currentEntryDate}/${photo.thumb_filename}"
                          data-full="/api/photos/${AppState.currentEntryDate}/${photo.filename}"
-                         alt="${this._escapeHtml(photo.original_name || '')}"
+                         alt="${escHtml(photo.original_name || '')}"
                          loading="lazy">
                     ${editable ? `<button class="photo-remove" data-photo-id="${photo.id}">×</button>` : ''}
                 </div>
@@ -403,10 +403,4 @@ const EntryView = {
         return html;
     },
 
-    /** HTML 转义 */
-    _escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
-    },
 };

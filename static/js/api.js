@@ -17,18 +17,7 @@ const API = {
         return res.json();
     },
 
-    /** 创建日记 */
-    async createEntry(date, data = {}) {
-        const res = await fetch('/api/entries', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ date, ...data }),
-        });
-        if (!res.ok) throw new Error(await res.text());
-        return res.json();
-    },
-
-    /** 更新日记 */
+    /** 更新日记（不存在则自动创建） */
     async updateEntry(date, data) {
         const res = await fetch(`/api/entries/${date}`, {
             method: 'PUT',
@@ -141,14 +130,4 @@ const API = {
         return res.json();
     },
 
-    // ===== 迁移 =====
-
-    /** 导入旧日记 */
-    async migrateDiary() {
-        const res = await fetch('/api/migrate', {
-            method: 'POST',
-        });
-        if (!res.ok) throw new Error(await res.text());
-        return res.json();
-    },
 };

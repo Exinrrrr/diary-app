@@ -244,3 +244,27 @@ a:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-text-muted);
 }
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === 空状态 === */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--color-text-muted);
+}
+.empty-state .empty-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    opacity: 0.25;
+}
+.empty-state p {
+    font-size: 14px;
+    line-height: 1.7;
+}

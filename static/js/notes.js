@@ -51,7 +51,7 @@ const NotesView = {
                 const selected = p.id === this._selectedProjectId ? 'selected' : '';
                 html += `
                     <div class="notes-project-item ${selected}" data-project-id="${p.id}">
-                        <span class="notes-project-name">${this._esc(p.name)}</span>
+                        <span class="notes-project-name">${escHtml(p.name)}</span>
                         <span class="notes-project-count">${p.note_count || 0}</span>
                     </div>
                 `;
@@ -68,7 +68,7 @@ const NotesView = {
             const project = this._projects.find(p => p.id === this._selectedProjectId);
             html += `
                 <div class="notes-content-header">
-                    <h2>${this._esc(project ? project.name : '')}</h2>
+                    <h2>${escHtml(project ? project.name : '')}</h2>
                     <div style="display:flex;gap:6px;">
                         <button class="btn btn-sm btn-outline" id="btn-edit-project">✏️ 编辑项目</button>
                         <button class="btn btn-sm btn-primary" id="btn-add-note">+ 新笔记</button>
@@ -82,8 +82,8 @@ const NotesView = {
                     html += `
                         <div class="notes-card" data-note-id="${n.id}">
                             <div class="notes-card-body">
-                                <div class="notes-card-title">${this._esc(t)}</div>
-                                <div class="notes-card-preview">${this._esc(this._preview(n.content_md))}</div>
+                                <div class="notes-card-title">${escHtml(t)}</div>
+                                <div class="notes-card-preview">${escHtml(this._preview(n.content_md))}</div>
                             </div>
                             <span class="notes-card-time">${this._timeStr(n.updated_at)}</span>
                         </div>
@@ -155,11 +155,11 @@ const NotesView = {
                 </div>
                 <div class="form-group">
                     <label class="label">项目名称</label>
-                    <input class="input" id="project-name" value="${this._esc(existing ? existing.name : '')}" placeholder="例如：街道办工作">
+                    <input class="input" id="project-name" value="${escHtml(existing ? existing.name : '')}" placeholder="例如：街道办工作">
                 </div>
                 <div class="form-group">
                     <label class="label">描述（可选）</label>
-                    <input class="input" id="project-desc" value="${this._esc(existing ? existing.description : '')}" placeholder="简短描述">
+                    <input class="input" id="project-desc" value="${escHtml(existing ? existing.description : '')}" placeholder="简短描述">
                 </div>
                 <div class="modal-footer">
                     ${existing ? '<button class="btn btn-danger btn-sm" id="btn-delete-project">🗑️ 删除项目</button>' : ''}
@@ -235,10 +235,10 @@ const NotesView = {
                     <button class="modal-close">&times;</button>
                 </div>
                 <div class="form-group">
-                    <input class="input" id="note-title" value="${this._esc(note ? note.title : '')}" placeholder="笔记标题" style="font-size:18px;font-weight:600;">
+                    <input class="input" id="note-title" value="${escHtml(note ? note.title : '')}" placeholder="笔记标题" style="font-size:18px;font-weight:600;">
                 </div>
                 <div class="form-group">
-                    <textarea class="textarea" id="note-content" placeholder="写笔记...&#10;&#10;支持 Markdown 语法" style="min-height:280px;">${this._esc(note ? note.content_md : '')}</textarea>
+                    <textarea class="textarea" id="note-content" placeholder="写笔记...&#10;&#10;支持 Markdown 语法" style="min-height:280px;">${escHtml(note ? note.content_md : '')}</textarea>
                 </div>
                 <div class="modal-footer">
                     ${!isNew ? '<button class="btn btn-danger btn-sm" id="btn-delete-note">🗑️ 删除</button>' : ''}
@@ -307,10 +307,4 @@ const NotesView = {
         try { return ts ? ts.slice(0, 10) : ''; } catch (e) { return ''; }
     },
 
-    _esc(s) {
-        if (!s) return '';
-        const div = document.createElement('div');
-        div.textContent = s;
-        return div.innerHTML;
-    },
 };

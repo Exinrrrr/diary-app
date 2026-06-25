@@ -82,8 +82,8 @@ const RemindersView = {
                     ${isOverdue ? '🔴' : r.is_completed ? '✅' : '⏰'}
                 </div>
                 <div style="flex:1;min-width:0;">
-                    <div style="font-weight:600;font-size:15px;">${this._escapeHtml(r.title)}</div>
-                    ${r.description ? `<div style="font-size:13px;color:var(--color-text-muted);margin-top:2px;">${this._escapeHtml(r.description)}</div>` : ''}
+                    <div style="font-weight:600;font-size:15px;">${escHtml(r.title)}</div>
+                    ${r.description ? `<div style="font-size:13px;color:var(--color-text-muted);margin-top:2px;">${escHtml(r.description)}</div>` : ''}
                     <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;">
                         ${dateStr}
                         ${recurringLabel ? ` · ${recurringLabel}` : ''}
@@ -190,12 +190,12 @@ const RemindersView = {
                 <div class="form-group">
                     <label class="label">标题</label>
                     <input class="input" id="remind-title" placeholder="例如：开会"
-                           value="${this._escapeHtml(existing ? existing.title : '')}">
+                           value="${escHtml(existing ? existing.title : '')}">
                 </div>
                 <div class="form-group">
                     <label class="label">描述（可选）</label>
                     <input class="input" id="remind-desc" placeholder="补充说明"
-                           value="${this._escapeHtml(existing ? existing.description : '')}">
+                           value="${escHtml(existing ? existing.description : '')}">
                 </div>
                 <div class="form-group">
                     <label class="label">提醒时间</label>
@@ -204,7 +204,7 @@ const RemindersView = {
                 <div class="form-group">
                     <label class="label">关联日记日期（可选）</label>
                     <input class="input" type="date" id="remind-entry-date"
-                           value="${this._escapeHtml(existing ? existing.entry_date : '')}">
+                           value="${escHtml(existing ? existing.entry_date : '')}">
                 </div>
                 <div class="form-group">
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
@@ -279,9 +279,4 @@ const RemindersView = {
         });
     },
 
-    _escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
-    },
 };
