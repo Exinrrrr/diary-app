@@ -413,7 +413,7 @@ async function initApp() {
             const pullRes = await fetch('/api/update/pull', { method: 'POST' });
             const pullData = await pullRes.json();
             if (pullData.success) {
-                showToast('更新完成！请刷新页面（Cmd+Shift+R）', 'success');
+                showToast('更新完成！请刷新页面', 'success');
             } else {
                 showToast('更新失败：' + pullData.message, 'error');
             }
