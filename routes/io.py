@@ -237,19 +237,12 @@ def import_backup():
     try:
         # 先将上传文件读入内存，避免 Flask FileStorage 的流兼容问题
         file_data = file.read()
-        log_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'import_debug.log')
-        with open(log_path, 'a') as logf:
-            logf.write(f"[IMPORT] file={file.filename}, size={len(file_data)}, mode={mode}\n")
         zip_data = io_module.BytesIO(file_data)
         with zipfile.ZipFile(zip_data) as zf:
             namelist = zf.namelist()
-            with open(log_path, 'a') as logf:
-                logf.write(f"[IMPORT] zip has {len(namelist)} files, metadata={'metadata.json' in namelist}\n")
             # 先处理 metadata.json
-            if 'metadata.json' in zf.namelist():
+            if 'metadata.json' in namelist:
                 metadata = json.loads(zf.read('metadata.json').decode('utf-8'))
-                with open(log_path, 'a') as logf:
-                    logf.write(f"[IMPORT] metadata: {len(metadata.get('entries',[]))} entries\n")
 
                 for entry_data in metadata.get('entries', []):
                     date = entry_data['date']
@@ -340,8 +333,6 @@ def import_backup():
                     )
             else:
                 # 无 metadata.json 时，从 entries/*.md 文件重建
-                with open(log_path, 'a') as logf:
-                    logf.write("[IMPORT] no metadata.json, reconstructing from files\n")
                 for name in namelist:
                     if name.startswith('entries/') and name.endswith('.md'):
                         fname = name.replace('entries/', '')

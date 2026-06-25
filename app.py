@@ -25,7 +25,6 @@ def create_app():
     from routes.entries import entries_bp
     from routes.photos import photos_bp
     from routes.reminders import reminders_bp
-    from routes.migrate import migrate_bp
     from routes.io import io_bp
     from routes.notes import notes_bp
 
@@ -33,7 +32,6 @@ def create_app():
     app.register_blueprint(entries_bp, url_prefix='/api')
     app.register_blueprint(photos_bp, url_prefix='/api')
     app.register_blueprint(reminders_bp, url_prefix='/api')
-    app.register_blueprint(migrate_bp, url_prefix='/api')
     app.register_blueprint(io_bp, url_prefix='/api')
     app.register_blueprint(notes_bp, url_prefix='/api')
 
