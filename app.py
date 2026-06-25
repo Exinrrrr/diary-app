@@ -36,9 +36,30 @@ def create_app():
     app.register_blueprint(io_bp, url_prefix='/api')
     app.register_blueprint(notes_bp, url_prefix='/api')
 
-    # 更新按钮 API
-    @app.route('/api/update', methods=['POST'])
-    def update_app():
+    # 更新按钮 API：检查是否有新版本
+    @app.route('/api/update/check', methods=['POST'])
+    def check_update():
+        try:
+            import os
+            base = os.path.dirname(os.path.abspath(__file__))
+            # fetch 获取远程信息
+            subprocess.run(['git', 'fetch'], cwd=base, capture_output=True, text=True, timeout=15)
+            # 比较本地和远程
+            behind = subprocess.run(
+                ['git', 'rev-list', '--count', 'HEAD..origin/main'],
+                cwd=base, capture_output=True, text=True, timeout=10
+            )
+            count = int(behind.stdout.strip())
+            if count == 0:
+                return jsonify({'has_update': False, 'message': '已是最新版本'})
+            else:
+                return jsonify({'has_update': True, 'message': f'发现 {count} 个新提交'})
+        except Exception as e:
+            return jsonify({'has_update': False, 'message': f'检查失败：{e}'}), 500
+
+    # 更新按钮 API：执行更新
+    @app.route('/api/update/pull', methods=['POST'])
+    def pull_update():
         try:
             import os
             result = subprocess.run(
@@ -47,7 +68,7 @@ def create_app():
                 capture_output=True, text=True, timeout=30
             )
             if result.returncode == 0:
-                output = result.stdout.strip() or '已是最新版本'
+                output = result.stdout.strip() or '已更新'
                 return jsonify({'success': True, 'message': output})
             else:
                 return jsonify({'success': False, 'message': result.stderr.strip() or '更新失败'}), 500
