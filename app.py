@@ -2,7 +2,8 @@
 
 import os
 import sys
-from flask import Flask
+import subprocess
+from flask import Flask, jsonify
 from config import SECRET_KEY, DEBUG, DATA_DIR, ENTRIES_DIR, PHOTOS_DIR
 from database.db import init_db, close_db, get_db
 
@@ -34,6 +35,26 @@ def create_app():
     app.register_blueprint(reminders_bp, url_prefix='/api')
     app.register_blueprint(io_bp, url_prefix='/api')
     app.register_blueprint(notes_bp, url_prefix='/api')
+
+    # 更新按钮 API
+    @app.route('/api/update', methods=['POST'])
+    def update_app():
+        try:
+            import os
+            result = subprocess.run(
+                ['git', 'pull'],
+                cwd=os.path.dirname(os.path.abspath(__file__)),
+                capture_output=True, text=True, timeout=30
+            )
+            if result.returncode == 0:
+                output = result.stdout.strip() or '已是最新版本'
+                return jsonify({'success': True, 'message': output})
+            else:
+                return jsonify({'success': False, 'message': result.stderr.strip() or '更新失败'}), 500
+        except subprocess.TimeoutExpired:
+            return jsonify({'success': False, 'message': '更新超时，请检查网络'}), 500
+        except Exception as e:
+            return jsonify({'success': False, 'message': str(e)}), 500
 
     return app
 

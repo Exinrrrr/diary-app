@@ -398,6 +398,28 @@ async function initApp() {
         RemindersView.show();
     });
 
+    // 更新按钮
+    document.getElementById('btn-update').addEventListener('click', async () => {
+        showToast('正在检查更新...');
+        try {
+            const res = await fetch('/api/update', { method: 'POST' });
+            const data = await res.json();
+            if (data.success) {
+                showToast(data.message === '已是最新版本' ? '已是最新版本 ✨' : `更新完成：${data.message}`, 'success');
+                if (data.message !== '已是最新版本') {
+                    // 有更新，提示刷新页面
+                    setTimeout(() => {
+                        showToast('请刷新页面以加载最新代码（Cmd+Shift+R）', 'success');
+                    }, 1000);
+                }
+            } else {
+                showToast('更新失败：' + data.message, 'error');
+            }
+        } catch (e) {
+            showToast('更新失败：' + e.message, 'error');
+        }
+    });
+
     document.getElementById('btn-notes').addEventListener('click', () => {
         NotesView.show();
     });
