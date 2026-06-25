@@ -1,0 +1,161 @@
+/* === 工作笔记布局 === */
+.notes-layout {
+    display: flex;
+    height: 100%;
+    gap: 0;
+}
+
+/* === 左侧项目栏 === */
+.notes-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--color-border);
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.notes-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.notes-sidebar-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.notes-project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.notes-project-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.1s;
+    font-size: 14px;
+}
+
+.notes-project-item:hover {
+    background: var(--color-primary-light);
+}
+
+.notes-project-item.selected {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.notes-project-count {
+    font-size: 11px;
+    background: var(--color-border);
+    border-radius: 10px;
+    padding: 1px 8px;
+    color: var(--color-text-secondary);
+}
+
+.notes-project-item.selected .notes-project-count {
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+}
+
+/* === 右侧内容 === */
+.notes-content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.notes-content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.notes-content-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* === 笔记卡片 === */
+.notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.notes-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.notes-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.notes-card-body {
+    flex: 1;
+    min-width: 0;
+    margin-right: 12px;
+}
+
+.notes-card-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.notes-card-preview {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notes-card-time {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+/* === 空状态 === */
+.notes-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--color-text-muted);
+    font-size: 14px;
+}
+
+/* === 欢迎 === */
+.notes-welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--color-text-muted);
+    gap: 8px;
+}
+
+.notes-welcome span {
+    font-size: 48px;
+    opacity: 0.5;
+}

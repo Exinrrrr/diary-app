@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实习日记</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/calendar.css">
+    <link rel="stylesheet" href="/static/css/entry.css">
+    <link rel="stylesheet" href="/static/css/notes.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 顶部导航 -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="app-title">📔 实习日记</h1>
+                <span class="app-subtitle">北京 · 2026</span>
+            </div>
+            <div class="header-right">
+                <button id="btn-quick-record" class="btn btn-accent btn-sm">
+                    ⚡ 快速记录
+                </button>
+                <div class="dropdown-wrapper">
+                    <button id="btn-export" class="header-btn" title="导出">
+                        📤
+                    </button>
+                    <div class="dropdown-menu hidden" id="export-dropdown">
+                        <button class="dropdown-item" data-action="export-backup">
+                            📦 完整备份 (.zip)
+                        </button>
+                        <button class="dropdown-item" data-action="export-markdown">
+                            📄 纯文档 (.md)
+                        </button>
+                    </div>
+                </div>
+                <label class="header-btn" title="导入" style="cursor:pointer;">
+                    📥
+                    <input type="file" id="import-file-input" style="display:none;">
+                </label>
+                <button id="btn-reminders" class="header-btn" title="提醒">
+                    🔔
+                    <span id="reminder-badge" class="badge hidden">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 主体布局 -->
+        <div class="app-body">
+            <!-- 侧边栏：日历 -->
+            <aside class="sidebar">
+                <div class="calendar-container" id="calendar-container">
+                    <!-- 由 calendar.js 渲染 -->
+                </div>
+                <div class="sidebar-actions">
+                    <button id="btn-new-entry" class="btn btn-primary btn-full">
+                        ✏️ 写日记
+                    </button>
+                    <button id="btn-notes" class="btn btn-outline btn-full">
+                        📋 工作笔记
+                    </button>
+                    <button id="btn-reminder-panel" class="btn btn-outline btn-full">
+                        ⏰ 提醒列表
+                    </button>
+                </div>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main class="main-content" id="main-content">
+                <!-- 默认：欢迎页 -->
+                <div id="view-welcome" class="view active">
+                    <div class="welcome-card">
+                        <div class="welcome-icon">📔</div>
+                        <h2>欢迎回来</h2>
+                        <p>点击左侧日历中的日期查看日记，<br>或点击"写日记"记录今天。</p>
+                    </div>
+                </div>
+
+                <!-- 日记详情/编辑 -->
+                <div id="view-entry" class="view">
+                    <!-- 由 entry.js 渲染 -->
+                </div>
+
+                <!-- 工作笔记 -->
+                <div id="view-notes" class="view">
+                    <!-- 由 notes.js 渲染 -->
+                </div>
+
+                <!-- 提醒面板 -->
+                <div id="view-reminders" class="view">
+                    <!-- 由 reminders.js 渲染 -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast 容器 -->
+    <div id="toast-container"></div>
+
+    <!-- 图片灯箱 -->
+    <div id="lightbox" class="lightbox hidden">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+        <span class="lightbox-caption" id="lightbox-caption"></span>
+    </div>
+
+    <!-- 快速记录对话框 -->
+    <div id="quick-record-modal" class="modal-overlay hidden">
+        <div class="modal quick-record-modal">
+            <div class="modal-header">
+                <span class="modal-title">⚡ 快速记录</span>
+                <button class="modal-close" id="quick-record-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="label">日期</label>
+                <input type="date" class="input" id="quick-record-date">
+            </div>
+            <div class="form-group">
+                <label class="label">行程内容</label>
+                <textarea class="textarea" id="quick-record-input"
+                    placeholder="把一天的行程直接贴进来，例如：&#10;&#10;早上去社区参观&#10;下午开会讨论了项目进展&#10;午饭吃了食堂&#10;晚上和李老师讨论了报告&#10;&#10;系统会自动按时间段分组并配上 emoji ~"
+                    style="min-height:180px;"></textarea>
+                <p style="font-size:12px;color:var(--color-text-muted);margin-top:4px;">
+                    💡 支持识别：【今天】【昨天】【X月X日】自动填入日期
+                </p>
+            </div>
+            <div id="quick-record-preview" class="auto-format-preview hidden"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="quick-record-cancel">取消</button>
+                <button class="btn btn-primary" id="quick-record-format">🪄 预览排版</button>
+                <button class="btn btn-accent hidden" id="quick-record-save">💾 保存日记</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 脚本 -->
+    <script src="/static/js/utils.js?v=8"></script>
+    <script src="/static/js/api.js?v=8"></script>
+    <script src="/static/js/calendar.js?v=8"></script>
+    <script src="/static/js/entry.js?v=8"></script>
+    <script src="/static/js/notes.js?v=8"></script>
+    <script src="/static/js/reminders.js?v=8"></script>
+    <script src="/static/js/app.js?v=8"></script>
+</body>
+</html>

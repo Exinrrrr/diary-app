@@ -1,0 +1,134 @@
+/* === 日历容器 === */
+.calendar-container {
+    user-select: none;
+}
+
+/* === 日历头部：月份导航 === */
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.calendar-month {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 4px;
+}
+
+.calendar-nav button {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    transition: all 0.15s;
+}
+
+.calendar-nav button:hover {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.calendar-today-btn {
+    font-size: 12px !important;
+    width: auto !important;
+    padding: 0 10px;
+}
+
+/* === 星期头 === */
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.calendar-weekdays span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    padding: 4px 0;
+}
+
+.calendar-weekdays span:first-child,
+.calendar-weekdays span:last-child {
+    color: var(--color-accent);
+}
+
+/* === 日期网格 === */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-cell {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+    position: relative;
+    font-size: 14px;
+    color: var(--color-text);
+    transition: background 0.15s;
+}
+
+.calendar-cell:hover {
+    background: var(--color-primary-light);
+}
+
+.calendar-cell.today {
+    background: var(--color-accent-light);
+    font-weight: 700;
+}
+
+.calendar-cell.selected {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.calendar-cell.other-month {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    cursor: default;
+}
+
+/* === 日期标记 === */
+.cell-indicators {
+    display: flex;
+    gap: 2px;
+    margin-top: 1px;
+}
+
+.cell-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-primary);
+}
+
+.cell-dot.photo {
+    background: var(--color-accent);
+}
+
+/* === 当天有日记的单元格 === */
+.calendar-cell.has-entry {
+    font-weight: 600;
+}
