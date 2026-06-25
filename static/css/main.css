@@ -1,31 +1,32 @@
 /* === CSS 变量 === */
 :root {
-    --color-bg: #faf9f6;
-    --color-surface: #ffffff;
-    --color-primary: #5b7b94;
-    --color-primary-light: #e8eff4;
-    --color-primary-dark: #4a6a82;
-    --color-accent: #c4976b;
-    --color-accent-light: #f5ede4;
-    --color-text: #2c2c2c;
-    --color-text-secondary: #6b6b6b;
-    --color-text-muted: #999999;
-    --color-border: #e8e4df;
-    --color-danger: #c44b4b;
-    --color-danger-light: #fce8e8;
-    --color-success: #6b9b6b;
+    /* 纯白背景 + 近黑文字 */
+    --color-bg: oklch(1 0 0);
+    --color-surface: oklch(0.985 0 0);
+    --color-primary: oklch(0.48 0.095 150);
+    --color-primary-light: oklch(0.92 0.025 150);
+    --color-primary-dark: oklch(0.38 0.085 150);
+    --color-accent: oklch(0.55 0.11 150);
+    --color-accent-light: oklch(0.93 0.03 150);
+    --color-text: oklch(0.15 0 0);
+    --color-text-secondary: oklch(0.48 0 0);
+    --color-text-muted: oklch(0.7 0 0);
+    --color-border: oklch(0.92 0 0);
+    --color-danger: oklch(0.5 0.18 20);
+    --color-danger-light: oklch(0.95 0.02 20);
+    --color-success: oklch(0.52 0.12 150);
 
     --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     --font-mono: "SF Mono", "Fira Code", "Cascadia Code", monospace;
 
-    --radius: 8px;
-    --radius-lg: 12px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+    --radius: 6px;
+    --radius-lg: 10px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.08);
 
-    --sidebar-width: 300px;
-    --header-height: 56px;
+    --sidebar-width: 280px;
+    --header-height: 52px;
 }
 
 /* === 全局重置 === */
@@ -62,6 +63,16 @@ a {
     background: var(--color-bg);
 }
 
+/* === 链接 === */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+a:hover {
+    color: var(--color-primary-dark);
+}
+
 /* === 顶部导航 === */
 .app-header {
     display: flex;
@@ -81,9 +92,10 @@ a {
 }
 
 .app-title {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--color-text);
+    letter-spacing: -0.01em;
 }
 
 .app-subtitle {
@@ -197,9 +209,9 @@ a {
 }
 
 .welcome-icon {
-    font-size: 64px;
-    margin-bottom: 16px;
-    opacity: 0.6;
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.3;
 }
 
 .welcome-card h2 {

@@ -28,12 +28,12 @@
 }
 
 .btn-accent {
-    background: var(--color-accent);
+    background: var(--color-primary);
     color: #fff;
 }
 
 .btn-accent:hover {
-    background: #b3885e;
+    background: var(--color-primary-dark);
 }
 
 .btn-outline {
