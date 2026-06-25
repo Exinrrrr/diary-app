@@ -33,5 +33,7 @@ print('✅ 数据库已初始化')
 fi
 
 # 启动
+python3 app.py &
+sleep 2
 open http://localhost:5000
-python3 app.py
+wait
