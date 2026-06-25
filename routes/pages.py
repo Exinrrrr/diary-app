@@ -8,8 +8,3 @@ pages_bp = Blueprint('pages', __name__)
 def index():
     """主页面 — SPA 入口"""
     return render_template('index.html')
-
-@pages_bp.route('/test')
-def test():
-    """测试页面"""
-    return render_template('test.html')

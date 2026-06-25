@@ -35,5 +35,5 @@ fi
 # 启动
 python3 app.py &
 sleep 2
-open http://localhost:5000
+open http://localhost:8080
 wait

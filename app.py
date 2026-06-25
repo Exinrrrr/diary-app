@@ -86,5 +86,5 @@ if __name__ == '__main__':
 
     app = create_app()
     print("\n📔 实习日记应用已启动！")
-    print("   打开浏览器访问: http://localhost:5000\n")
-    app.run(debug=DEBUG, host='127.0.0.1', port=5000)
+    print("   打开浏览器访问: http://localhost:8080\n")
+    app.run(debug=DEBUG, host='127.0.0.1', port=8080)
