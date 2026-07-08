@@ -422,6 +422,30 @@ async function initApp() {
         }
     });
 
+    document.getElementById('btn-lock').addEventListener('click', async () => {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        window.location.href = '/lock';
+    });
+
+    // 移动端 ··· 菜单
+    const moreDropdown = document.getElementById('more-dropdown');
+    document.getElementById('btn-more').addEventListener('click', (e) => {
+        e.stopPropagation();
+        moreDropdown.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => moreDropdown.classList.add('hidden'));
+    moreDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+        moreDropdown.classList.add('hidden');
+        const action = e.target.closest('.dropdown-item')?.dataset.action;
+        if (!action) return;
+        if (action === 'update') document.getElementById('btn-update').click();
+        if (action === 'export') document.getElementById('btn-export').click();
+        if (action === 'import') document.querySelector('#import-file-input')?.click() || document.querySelector('[for="import-file-input"]')?.click();
+        if (action === 'reminders') RemindersView.show();
+        if (action === 'lock') document.getElementById('btn-lock').click();
+    });
+
     document.getElementById('btn-notes').addEventListener('click', () => {
         NotesView.show();
     });

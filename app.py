@@ -3,7 +3,7 @@
 import os
 import sys
 import subprocess
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, redirect, session, render_template
 from config import SECRET_KEY, DEBUG, DATA_DIR, ENTRIES_DIR, PHOTOS_DIR
 from database.db import init_db, close_db, get_db
 
@@ -20,6 +20,43 @@ def create_app():
 
     # 注册数据库清理
     app.teardown_appcontext(close_db)
+
+    # 密码锁
+    PASSWORD = '610223'
+
+    @app.before_request
+    def check_lock():
+        path = request.path
+        if path.startswith('/static/') or path == '/lock' or path.startswith('/api/auth/'):
+            return
+        if not session.get('unlocked'):
+            return redirect('/lock')
+
+    @app.route('/lock', methods=['GET'])
+    def lock_page():
+        return render_template('lock.html')
+
+    @app.route('/api/auth/unlock', methods=['POST'])
+    def unlock():
+        data = request.get_json()
+        if data and data.get('password') == PASSWORD:
+            session['unlocked'] = True
+            return jsonify({'success': True})
+        return jsonify({'success': False, 'error': '密码错误'}), 401
+
+    @app.route('/api/auth/logout', methods=['POST'])
+    def logout():
+        session.clear()
+        return jsonify({'success': True})
+
+    @app.route('/api/auth/ip', methods=['GET'])
+    def get_ip():
+        import subprocess
+        try:
+            ip = subprocess.check_output(['ipconfig', 'getifaddr', 'en0'], text=True).strip()
+            return jsonify({'ip': ip, 'url': f'http://{ip}:8080'})
+        except:
+            return jsonify({'ip': None})
 
     # 注册路由
     from routes.pages import pages_bp
@@ -87,4 +124,4 @@ if __name__ == '__main__':
     app = create_app()
     print("\n📔 实习日记应用已启动！")
     print("   打开浏览器访问: http://localhost:8080\n")
-    app.run(debug=DEBUG, host='127.0.0.1', port=8080)
+    app.run(debug=DEBUG, host='0.0.0.0', port=8080)

@@ -38,7 +38,7 @@
                         </button>
                     </div>
                 </div>
-                <label class="header-btn" title="导入" style="cursor:pointer;">
+                <label class="header-btn btn-import-label" title="导入" style="cursor:pointer;">
                     📥
                     <input type="file" id="import-file-input" style="display:none;">
                 </label>
@@ -46,6 +46,16 @@
                     🔔
                     <span id="reminder-badge" class="badge hidden">0</span>
                 </button>
+                <button id="btn-lock" class="header-btn" title="锁定">🔒</button>
+                <div class="btn-more-wrapper">
+                    <button id="btn-more" class="header-btn btn-more" title="更多">···</button>
+                    <div class="more-dropdown hidden" id="more-dropdown">
+                        <button class="dropdown-item" data-action="update">🔄 检查更新</button>
+                        <button class="dropdown-item" data-action="export">📤 导出</button>
+                        <button class="dropdown-item" data-action="import">📥 导入</button>
+                        <button class="dropdown-item" data-action="lock">🔒 锁定</button>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -141,12 +151,12 @@
     </div>
 
     <!-- 脚本 -->
-    <script src="/static/js/utils.js?v=12"></script>
-    <script src="/static/js/api.js?v=12"></script>
-    <script src="/static/js/calendar.js?v=12"></script>
-    <script src="/static/js/entry.js?v=12"></script>
-    <script src="/static/js/notes.js?v=12"></script>
-    <script src="/static/js/reminders.js?v=12"></script>
-    <script src="/static/js/app.js?v=12"></script>
+    <script src="/static/js/utils.js?v=13"></script>
+    <script src="/static/js/api.js?v=13"></script>
+    <script src="/static/js/calendar.js?v=13"></script>
+    <script src="/static/js/entry.js?v=13"></script>
+    <script src="/static/js/notes.js?v=13"></script>
+    <script src="/static/js/reminders.js?v=13"></script>
+    <script src="/static/js/app.js?v=13"></script>
 </body>
 </html>

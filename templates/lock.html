@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>实习日记</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:-apple-system,"PingFang SC",sans-serif;
+            background:oklch(0.975 0.012 85);
+            display:flex;align-items:center;justify-content:center;
+            min-height:100vh;
+        }
+        .lock-box{
+            background:#fff;
+            padding:48px 36px;
+            border-radius:12px;
+            box-shadow:0 4px 24px rgba(0,0,0,0.06);
+            width:320px;max-width:90vw;
+            text-align:center;
+        }
+        .lock-box .icon{font-size:40px;margin-bottom:16px;opacity:0.6}
+        .lock-box h1{
+            font-family:"Songti SC",serif;
+            font-size:22px;color:#2c2c2c;margin-bottom:6px;
+            letter-spacing:2px;
+        }
+        .lock-box p{font-size:13px;color:#999;margin-bottom:24px}
+        .lock-box input{
+            width:100%;padding:12px 14px;border:1px solid #e0dcd5;
+            border-radius:8px;font-size:18px;outline:none;
+            text-align:center;letter-spacing:4px;
+            font-family:inherit;
+            transition:border-color .15s;
+        }
+        .lock-box input:focus{
+            border-color:oklch(0.38 0.065 240);
+            box-shadow:0 0 0 3px oklch(0.9 0.025 240);
+        }
+        .lock-box .error{color:#c44;font-size:13px;margin-top:10px;min-height:20px}
+        .lock-box .btn{
+            width:100%;padding:12px;border:none;border-radius:8px;
+            background:oklch(0.38 0.065 240);color:#fff;
+            font-size:15px;cursor:pointer;margin-top:12px;
+            font-family:inherit;transition:background .15s;
+        }
+        .lock-box .btn:hover{background:oklch(0.28 0.055 240)}
+    </style>
+</head>
+<body>
+<div class="lock-box">
+    <div class="icon">📔</div>
+    <h1>实习日记</h1>
+    <p>输入密码解锁</p>
+    <input type="password" id="pw" placeholder="····" maxlength="20" autofocus>
+    <div class="error" id="err"></div>
+    <button class="btn" id="btn">解 锁</button>
+</div>
+
+<script>
+const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+
+document.getElementById('btn').addEventListener('click', async () => {
+    const pw = document.getElementById('pw').value;
+    const err = document.getElementById('err');
+    if (!pw) { err.textContent = '请输入密码'; return; }
+    try {
+        const r = await fetch('/api/auth/unlock', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({password:pw})
+        });
+        const d = await r.json();
+        if (d.success) {
+            // 电脑端解锁后提示手机访问地址
+            if (!isMobile) {
+                try {
+                    const ipRes = await fetch('/api/auth/ip');
+                    const ipData = await ipRes.json();
+                    if (ipData.ip) {
+                        const show = confirm('✅ 解锁成功！\n\n📱 手机访问地址：\n' + ipData.url + '\n\n（确保手机连同一 WiFi）\n\n按确定进入日记');
+                        if (!show) return;
+                    }
+                } catch(e) {}
+            }
+            window.location.href = '/';
+        }
+        else err.textContent = d.error || '密码错误';
+    } catch(e) { err.textContent = '网络错误'; }
+});
+document.getElementById('pw').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btn').click();
+});
+</script>
+</body>
+</html>

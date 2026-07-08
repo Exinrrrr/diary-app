@@ -142,6 +142,24 @@ a:hover { color: var(--color-primary-dark); }
     gap: var(--space-2);
 }
 
+.btn-more-wrapper { display: none; position: relative; }
+.btn-more { display: inline-flex !important; }
+
+/* 移动端下拉菜单 */
+.more-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    z-index: var(--z-dropdown);
+    min-width: 160px;
+    overflow: hidden;
+}
+
 .header-btn {
     position: relative;
     background: none;
@@ -257,6 +275,106 @@ a:hover { color: var(--color-primary-dark); }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* === 移动端响应式 === */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 100%;
+        --header-height: 44px;
+    }
+
+    /* 简化头部 */
+    .app-header { padding: 0 var(--space-2); gap: 4px; }
+    .app-title { font-size: 14px; letter-spacing: 0; }
+    .app-subtitle { display: none; }
+
+    /* 移动端：隐藏桌面按钮，显示 ··· 菜单 */
+    #btn-update, #btn-export, #btn-lock, #btn-reminders, .btn-import-label { display: none !important; }
+    .btn-more-wrapper { display: block; }
+
+    .header-btn {
+        padding: 4px 8px; font-size: 13px; min-height: 32px;
+        display: inline-flex; align-items: center; justify-content: center;
+    }
+    .header-right { gap: 2px; flex-shrink: 0; }
+
+    /* 主体纵向排列 */
+    .app-body { flex-direction: column; }
+
+    /* 侧边栏变成横向日历条 */
+    .sidebar {
+        width: 100%; flex-shrink: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border-light);
+        padding: var(--space-2) var(--space-3);
+        display: flex; flex-direction: column; gap: 4px;
+    }
+    .calendar-container { flex: 1; }
+    .calendar-grid { gap: 2px; }
+    .calendar-cell {
+        font-size: 13px;
+        aspect-ratio: auto;
+        min-height: 36px;
+    }
+    .calendar-weekdays span { font-size: 9px; }
+
+    /* 操作按钮变成底部栏 */
+    .sidebar-actions {
+        flex-direction: row; gap: 4px; padding-top: 4px;
+    }
+    .sidebar-actions .btn {
+        flex: 1; font-size: 12px; min-height: 34px; padding: 4px 2px;
+    }
+
+    /* 主内容区 */
+    .main-content { padding: var(--space-3); }
+    .entry-container { max-width: 100%; }
+    .entry-title { font-size: 18px; letter-spacing: 1px; }
+    .entry-content { font-size: 14px; line-height: 1.8; }
+    .entry-editor { min-height: 200px; font-size: 14px; }
+
+    /* 弹窗全屏 */
+    .modal {
+        min-width: auto; width: 96vw; max-width: 96vw;
+        padding: var(--space-4); margin: 8px;
+        max-height: 90vh;
+    }
+    .modal-title { font-size: 15px; }
+
+    /* 欢迎页 */
+    .welcome-card h2 { font-size: 18px; }
+    .welcome-icon { font-size: 36px; }
+
+    /* 笔记 */
+    .notes-layout { flex-direction: column; }
+    .notes-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); padding: var(--space-2) var(--space-3); }
+    .notes-project-list { flex-direction: row; flex-wrap: wrap; gap: 4px; }
+    .notes-project-item { padding: 6px 10px; font-size: 12px; flex: none; }
+    .notes-content { padding: var(--space-3); }
+    .notes-content-header h2 { font-size: 16px; }
+    .notes-card { padding: var(--space-3); }
+
+    /* 照片网格适配 */
+    .photo-gallery { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+
+    /* Toast 调整 */
+    #toast-container { bottom: var(--space-3); right: var(--space-2); left: var(--space-2); }
+    .toast { max-width: 100%; font-size: 12px; }
+
+    /* 隐藏下拉导出改为直接按钮 */
+    .dropdown-menu { right: auto; left: 0; }
+}
+
+/* 超小屏 */
+@media (max-width: 400px) {
+    .header-right { gap: 1px; }
+    .header-btn { padding: 3px 5px; font-size: 11px; min-height: 28px; }
+    .calendar-cell { font-size: 11px; min-height: 30px; }
+    .btn-sm { font-size: 10px; padding: 2px 4px; min-height: 26px; }
+    .sidebar-actions .btn { font-size: 10px; min-height: 30px; }
+    .entry-title { font-size: 16px; }
+    .entry-content h2 { font-size: 15px; }
+}
 
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
