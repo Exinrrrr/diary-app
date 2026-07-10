@@ -58,6 +58,60 @@ def create_app():
         except:
             return jsonify({'ip': None})
 
+    # 搜索 API
+    @app.route('/api/search')
+    def search():
+        q = request.args.get('q', '').strip()
+        if not q or len(q) < 1:
+            return jsonify([])
+
+        from database.db import get_db
+        db = get_db()
+        results = []
+        like = f'%{q}%'
+        seen = set()
+
+        def snippet(content, query):
+            if not content: return ''
+            idx = content.lower().find(query.lower())
+            if idx < 0: return ''
+            start = max(0, idx - 30)
+            end = min(len(content), idx + len(query) + 50)
+            s = content[start:end]
+            return ('...' if start > 0 else '') + s + ('...' if end < len(content) else '')
+
+        # 搜索日记标题
+        for e in db.execute("SELECT id, date, title FROM entries WHERE title LIKE ? ORDER BY date DESC LIMIT 20", (like,)).fetchall():
+            if e['id'] in seen: continue
+            seen.add(e['id'])
+            md_path = os.path.join(ENTRIES_DIR, f"{e['date']}.md")
+            content = ''
+            if os.path.exists(md_path):
+                with open(md_path, 'r', encoding='utf-8') as f: content = f.read()
+            results.append({'type': 'diary', 'id': e['id'], 'date': e['date'], 'title': e['title'] or '无标题', 'snippet': snippet(content, q)})
+
+        # 搜索日记文件内容
+        if os.path.isdir(ENTRIES_DIR):
+            for fname in os.listdir(ENTRIES_DIR):
+                if not fname.endswith('.md'): continue
+                date = fname.replace('.md', '')
+                if date in seen: continue
+                md_path = os.path.join(ENTRIES_DIR, fname)
+                try:
+                    with open(md_path, 'r', encoding='utf-8') as f: content = f.read()
+                    if q.lower() not in content.lower(): continue
+                    entry = db.execute("SELECT id, title FROM entries WHERE date=?", (date,)).fetchone()
+                    eid = entry['id'] if entry else None
+                    seen.add(eid)
+                    results.append({'type': 'diary', 'id': eid, 'date': date, 'title': entry['title'] if entry else '无标题', 'snippet': snippet(content, q)})
+                except: pass
+
+        # 搜索笔记
+        for n in db.execute("SELECT n.id, n.title, n.content_md, n.project_id, p.name as project FROM notes n LEFT JOIN projects p ON p.id=n.project_id WHERE n.title LIKE ? OR n.content_md LIKE ? ORDER BY n.updated_at DESC LIMIT 10", (like, like)).fetchall():
+            results.append({'type': 'note', 'id': n['id'], 'project_id': n['project_id'], 'title': n['title'] or '无标题', 'project': n['project'] or '', 'snippet': snippet(n['content_md'], q)})
+
+        return jsonify(results[:30])
+
     # 注册路由
     from routes.pages import pages_bp
     from routes.entries import entries_bp

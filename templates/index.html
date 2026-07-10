@@ -22,6 +22,7 @@
                 <button id="btn-update" class="header-btn" title="检查更新" style="font-size:13px;">
                     🔄 更新
                 </button>
+                <button id="btn-search" class="header-btn" title="搜索">🔍</button>
                 <button id="btn-quick-record" class="btn btn-accent btn-sm">
                     ⚡ 快速记录
                 </button>
@@ -150,13 +151,25 @@
         </div>
     </div>
 
+    <!-- 搜索弹窗 -->
+    <div id="search-modal" class="modal-overlay hidden">
+        <div class="modal" style="max-width:560px;">
+            <div class="modal-header">
+                <span class="modal-title">🔍 搜索</span>
+                <button class="modal-close" id="search-close">&times;</button>
+            </div>
+            <input class="input" id="search-input" placeholder="输入关键词搜索日记和笔记..." style="font-size:16px;" autofocus>
+            <div id="search-results" style="margin-top:12px;max-height:50vh;overflow-y:auto;"></div>
+        </div>
+    </div>
+
     <!-- 脚本 -->
-    <script src="/static/js/utils.js?v=13"></script>
-    <script src="/static/js/api.js?v=13"></script>
-    <script src="/static/js/calendar.js?v=13"></script>
-    <script src="/static/js/entry.js?v=13"></script>
-    <script src="/static/js/notes.js?v=13"></script>
-    <script src="/static/js/reminders.js?v=13"></script>
-    <script src="/static/js/app.js?v=13"></script>
+    <script src="/static/js/utils.js?v=14"></script>
+    <script src="/static/js/api.js?v=14"></script>
+    <script src="/static/js/calendar.js?v=14"></script>
+    <script src="/static/js/entry.js?v=14"></script>
+    <script src="/static/js/notes.js?v=14"></script>
+    <script src="/static/js/reminders.js?v=14"></script>
+    <script src="/static/js/app.js?v=14"></script>
 </body>
 </html>

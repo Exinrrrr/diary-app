@@ -99,3 +99,22 @@ function escHtml(str) {
     div.textContent = str;
     return div.innerHTML;
 }
+
+/** 统一绑定弹窗关闭事件 */
+function bindModalClose(overlay, closeFn) {
+    const closeBtn = overlay.querySelector('.modal-close');
+    const cancelBtn = overlay.querySelector('.cancel-btn');
+    if (closeBtn) closeBtn.addEventListener('click', closeFn);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeFn);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeFn(); });
+}
+
+/** 提取文本片段 */
+function extractSnippet(text, query, before = 30, after = 50) {
+    if (!text || !query) return '';
+    const idx = text.toLowerCase().indexOf(query.toLowerCase());
+    if (idx < 0) return '';
+    const start = Math.max(0, idx - before);
+    const end = Math.min(text.length, idx + query.length + after);
+    return (start > 0 ? '...' : '') + text.slice(start, end) + (end < text.length ? '...' : '');
+}

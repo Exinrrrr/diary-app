@@ -365,12 +365,6 @@ def import_backup():
                 if name.startswith('entries/') and name.endswith('.md'):
                     fname = os.path.basename(name)
                     dest = os.path.join(ENTRIES_DIR, fname)
-                    # 合并模式下，如果文件已存在且不是覆盖的条目则跳过
-                    if mode == 'merge' and os.path.exists(dest):
-                        # 文件内容由上面 metadata 处理决定是否覆盖
-                        date_str = fname.replace('.md', '')
-                        # 检查是否在上面被 skipped 了
-                        pass
                     os.makedirs(os.path.dirname(dest), exist_ok=True)
                     with open(dest, 'wb') as f:
                         f.write(zf.read(name))

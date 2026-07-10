@@ -446,6 +446,46 @@ async function initApp() {
         if (action === 'lock') document.getElementById('btn-lock').click();
     });
 
+    // 搜索
+    const searchModal = document.getElementById('search-modal');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    document.getElementById('btn-search').addEventListener('click', () => {
+        searchModal.classList.remove('hidden');
+        searchInput.value = '';
+        searchResults.innerHTML = '<p style="color:var(--color-text-muted);text-align:center;padding:20px;">输入关键词开始搜索</p>';
+        searchInput.focus();
+    });
+    document.getElementById('search-close').addEventListener('click', () => searchModal.classList.add('hidden'));
+    searchModal.addEventListener('click', (e) => { if (e.target === searchModal) searchModal.classList.add('hidden'); });
+
+    searchInput.addEventListener('input', debounce(async () => {
+        const q = searchInput.value.trim();
+        if (!q) { searchResults.innerHTML = '<p style="color:var(--color-text-muted);text-align:center;padding:20px;">输入关键词开始搜索</p>'; return; }
+        searchResults.innerHTML = '<p style="color:var(--color-text-muted);text-align:center;padding:20px;">搜索中...</p>';
+        try {
+            const res = await fetch('/api/search?q=' + encodeURIComponent(q));
+            const data = await res.json();
+            if (data.length === 0) {
+                searchResults.innerHTML = '<p style="color:var(--color-text-muted);text-align:center;padding:24px;">没有找到结果</p>';
+                return;
+            }
+            searchResults.innerHTML = data.map(r => {
+                const icon = r.type === 'diary' ? '📅' : '📋';
+                const label = r.type === 'diary'
+                    ? `<a href="javascript:void(0)" onclick="openEntry('${r.date}');document.getElementById('search-modal').classList.add('hidden')">${r.date} ${escHtml(r.title)}</a>`
+                    : `<span>📋 ${escHtml(r.project)} › ${escHtml(r.title)}</span>`;
+                return `<div class="search-result-item" style="padding:10px 12px;border-bottom:1px solid var(--color-border-light);cursor:pointer;${r.type==='diary'?'':'opacity:0.8'}">
+                    <div style="font-weight:600;font-size:14px;margin-bottom:4px;">${label}</div>
+                    ${r.snippet ? `<div style="font-size:12px;color:var(--color-text-muted);">${escHtml(r.snippet)}</div>` : ''}
+                </div>`;
+            }).join('');
+        } catch (e) {
+            searchResults.innerHTML = '<p style="color:var(--color-danger);text-align:center;padding:20px;">搜索失败</p>';
+        }
+    }, 300));
+
     document.getElementById('btn-notes').addEventListener('click', () => {
         NotesView.show();
     });
